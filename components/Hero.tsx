@@ -1,10 +1,10 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const SLIDES = [
   {
     bg: '#c9b5a8',
-    image: '/images/slide-nail.jpg', 
+    image: '/images/slide-nail.jpg',
     overlay: 'rgba(60,40,30,0.25)',
     label: 'nail close-up',
   },
@@ -18,109 +18,4 @@ const SLIDES = [
     bg: '#b8a899',
     image: '/images/slide-lash.jpg',
     overlay: 'rgba(50,35,25,0.28)',
-    label: 'lash treatment',
-  },
-]
-
-export default function Hero() {
-  const [current, setCurrent] = useState(0)
-  const [visible, setVisible] = useState(false)
-
-  // Hero text entrance on load
-  useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), 300)
-    return () => clearTimeout(timer)
-  }, [])
-
-  // Slideshow
-  useEffect(() => {
-    const id = setInterval(() => {
-      setCurrent((c) => (c + 1) % SLIDES.length)
-    }, 4200)
-    return () => clearInterval(id)
-  }, [])
-
-  const delays = ['', 'delay-1', 'delay-2', 'delay-3']
-
-  return (
-    <section id="hero">
-      {/* Slides */}
-      {SLIDES.map((s, i) => (
-        <div key={i} className={`hero-slide${i === current ? ' active' : ''}`}>
-          <div style={{
-      position: 'relative',
-      width: '100%',
-      height: '100%',
-      backgroundColor: s.bg,   // 画像読込中のフォールバック色
-    }}>
-      <img
-        src={s.image}
-        alt={s.label}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',    // ← 写真を全幅・全高にフィット
-        }}
-      />
-      {/* オーバーレイ（暗くして文字を読みやすくする） */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundColor: s.overlay,
-      }} />
-    </div>
-            <rect width="1920" height="1080" fill={s.bg} />
-            <defs>
-              <pattern
-                id={s.patternId}
-                width="40"
-                height="40"
-                patternUnits="userSpaceOnUse"
-                patternTransform={`rotate(${s.rotate})`}
-              >
-                <line
-                  x1="0" y1="0" x2="0" y2="40"
-                  stroke={s.stroke}
-                  strokeWidth={s.strokeW}
-                />
-              </pattern>
-            </defs>
-            <rect width="1920" height="1080" fill={`url(#${s.patternId})`} />
-            <text
-              x="960" y="580"
-              textAnchor="middle"
-              fill="rgba(255,255,255,0.1)"
-              fontSize="120"
-              fontFamily="Georgia"
-              letterSpacing="30"
-            >
-              {s.label}
-            </text>
-            <rect width="1920" height="1080" fill={s.overlay} />
-          </svg>
-        </div>
-      ))}
-
-      {/* Overlay text */}
-      <div className="hero-overlay">
-        {[
-          <div key="en"  className={`hero-en  reveal${visible ? ' visible' : ''} ${delays[0]}`}>Feuille</div>,
-          <div key="ja"  className={`hero-ja  reveal${visible ? ' visible' : ''} ${delays[1]}`}>フィーユ</div>,
-          <div key="cat" className={`hero-catch reveal${visible ? ' visible' : ''} ${delays[2]}`}>素肌に、やさしい美しさを。</div>,
-          <a   key="cta" href="#access"
-               className={`hero-cta reveal${visible ? ' visible' : ''} ${delays[3]}`}>
-            初回トライアルを予約する
-          </a>,
-        ]}
-      </div>
-
-      {/* Scroll hint */}
-      <div className="hero-scroll">
-        <span>SCROLL</span>
-        <div className="hero-scroll-line" />
-      </div>
-    </section>
-  )
-}
+    label: 'lash treatment
