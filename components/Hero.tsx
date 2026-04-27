@@ -4,28 +4,19 @@ import { useEffect, useRef, useState } from 'react'
 const SLIDES = [
   {
     bg: '#c9b5a8',
-    patternId: 'h1p',
-    rotate: '35',
-    stroke: 'rgba(255,255,255,0.07)',
-    strokeW: '1',
+    image: '/images/slide-nail.jpg', 
     overlay: 'rgba(60,40,30,0.25)',
     label: 'nail close-up',
   },
   {
     bg: '#9aad94',
-    patternId: 'h2p',
-    rotate: '-20',
-    stroke: 'rgba(255,255,255,0.08)',
-    strokeW: '1.5',
+    image: '/images/slide-room.jpg',
     overlay: 'rgba(30,50,35,0.30)',
     label: 'private room',
   },
   {
     bg: '#b8a899',
-    patternId: 'h3p',
-    rotate: '12',
-    stroke: 'rgba(255,255,255,0.09)',
-    strokeW: '0.8',
+    image: '/images/slide-lash.jpg',
     overlay: 'rgba(50,35,25,0.28)',
     label: 'lash treatment',
   },
@@ -56,11 +47,30 @@ export default function Hero() {
       {/* Slides */}
       {SLIDES.map((s, i) => (
         <div key={i} className={`hero-slide${i === current ? ' active' : ''}`}>
-          <svg
-            viewBox="0 0 1920 1080"
-            preserveAspectRatio="xMidYMid slice"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <div style={{
+      position: 'relative',
+      width: '100%',
+      height: '100%',
+      backgroundColor: s.bg,   // 画像読込中のフォールバック色
+    }}>
+      <img
+        src={s.image}
+        alt={s.label}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',    // ← 写真を全幅・全高にフィット
+        }}
+      />
+      {/* オーバーレイ（暗くして文字を読みやすくする） */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundColor: s.overlay,
+      }} />
+    </div>
             <rect width="1920" height="1080" fill={s.bg} />
             <defs>
               <pattern
